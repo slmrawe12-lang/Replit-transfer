@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Pencil Shorthand"
+description = "A touch-first shorthand canvas for iPad and Apple Pencil that recognizes simple geometric strokes and turns them into running English text in real time."
+version = "1.0.0"
+id = "artifacts/pencil-shorthand"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21540
+
+[services.development]
+run = "pnpm --filter @workspace/pencil-shorthand run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pencil-shorthand", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/pencil-shorthand/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21540"
+BASE_PATH = "/"
